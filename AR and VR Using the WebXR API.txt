@@ -13,3 +13,4 @@ CAP 2 -
 		2º -> De Fragmento - Calcula os valores da cro que cada pixel deve transmitir.
 ===
 CAP 3 - 
+	Pipeline WebGl -> Coleta coordenadas de pontos no espaço 3D, chamadas vértices, e os armazena em estruturas de dados chamadas buffers. 
