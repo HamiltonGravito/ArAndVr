@@ -1,0 +1,15 @@
+CAP 1 - 
+	WebXR -> Especificação desenvolvida pela Word Wide Web Comsortiunm (W3C), implementada pela API WebXR (Interface entre o conteúdo da WebXR e os dispositivos nos quais são executados).
+Obs.: Extende a API WebGL para "rasterizar (converte uma imagem vetorial em imagem de pixels)" o conteúdo 3D em um navegador.
+	WebGL -> Biblioteca gráfica da web disponivél por meio de uma API java script e mantida pelo Grupo Kronos.
+===
+CAP 2 - 
+	Atalho VSCode:
+		"! Enter" -> (Gera um modelo HTMl em um arquivo .html).
+		"Ctrl + Shift + Alt + Up/Down" -> (Copia linha para cima ou para baixo) 'LINUX'.
+	
+	Shaders -> Funções que instruímos o programa a executar para cada pixel na tela.
+		1º -> De Vértice - Calcula a posição dos pontos em uma cena.
+		2º -> De Fragmento - Calcula os valores da cro que cada pixel deve transmitir.
+===
+CAP 3 - 

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trabalhando com WebGL</title>
+    <style>
+        canvas {
+            /*Definir os valores 100vw (width) e 100vh (height) instrui o navegador a preencher toda a tela da janela de visualização*/
+            width: 100vw;
+            height: 100vh;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="1216" height="1334"></canvas>
+
+    <!-- Linguagem GLSL -->
+    <script id="vertex-data" type="not-javascript">
+        attribute vec4 vertex_points;
+
+        void main() {
+            gl_Position = vertex_points;
+        }
+    </script>
+
+    <!-- Linguagem GLSL -->
+    <script id="fragment-data" type="not-javascript">
+        precision mediump float;
+
+        void main() {
+            gl_FragColor = vec4(0, 1, 0, 1);
+        }
+    </script>
+</body>
+<script type="text/javascript">
+    const canvas = document.querySelector("#canvas");
+    const gl = canvas.getContext('webgl');
+    if (!gl) {
+        console.log("webGL indisponível");
+    } else {
+        console.log("WebGL está pronto!");
+    }
+
+    console.log(gl.drawingBufferWidth);
+    console.log(gl.drawingBufferHeight);
+    console.log(gl);
+
+   //Matriz com 8 pontos coordenados (x,y)
+   const coordinates = [
+    -0.7, 0.7,
+    0.7, 0.7,
+    -0.7, 0,
+    0.7, 0,
+    
+    ];
+
+    //Cria um objeto buffer vázio.
+    const pointsBuffer = gl.createBuffer();
+    //Local de memoria no servidor a ser enviado em um pacote de dados pela internet.
+    gl.bindBuffer(gl.ARRAY_BUFFER, pointsBuffer);
+
+    //Define o tamanho dos dados a serem enviados para a GPU do cliente. Obs.: O último argumento diz que os dados do buffer não serão modificados.
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(coordinates), gl.STATIC_DRAW);
+
+    //Salva os valores em String dos sombreadores.
+    const vsSource = document.querySelector("#vertex-data").text;
+    const fsSource = document.querySelector("#fragment-data").text;
+
+    //Armazena os dados dos shaders (sombreadores) em js por meio das variáveis vsSource e fsSource.
+    const vertexShader = gl.createShader(gl.VERTEX_SHADER);
+    gl.shaderSource(vertexShader, vsSource);
+    gl.compileShader(vertexShader);
+    const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
+    gl.shaderSource(fragmentShader, fsSource);
+    gl.compileShader(fragmentShader);
+
+    //Cria um container de transporte que passará as funções de sombreador para GPU, anexando e vinculando os shaders.
+    const program = gl.createProgram();
+    gl.attachShader(program, vertexShader);
+    gl.attachShader(program, fragmentShader);
+    gl.linkProgram(program);
+    gl.useProgram(program);
+    
+
+    //Localiza o atributo vertex_points na fonte
+    const pointsAttributeLocation = gl.getAttribLocation(program, "vertex_points");
+
+    //Conecta o atributo aos dados no objeto buffer.
+    let size = 2; //Componentes por iteração
+    let type = gl.FLOAT; //Dados flutuantes de 32 bits
+    let normalize = false; //Normalizar
+    let stride = 0; //Não pule indices entre pares de coordenadas
+    let offset = 0; //Começa no início do buffer
+    gl.vertexAttribPointer(pointsAttributeLocation, size, type, normalize, stride, offset);
+
+    //Envia os dados para a GPU e lê os valores do buffer.
+    gl.enableVertexAttribArray(pointsAttributeLocation);
+
+    //Limpar e definir um novo valor para visualização da tela.
+    gl.clearColor(0, 0, 0, 0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+
+    const mode = gl.TRIANGLE_STRIP;
+    //LINE_STRIP -> Desenha uma linha reta para o pŕoximo vértice;
+    //LINE_LOOP -> Desenha uma linha reta para o pŕoximo vértice e conecta o último ao primeiro;
+    //TRIANGLES -> Desenha um triângulo para um grupo de três vértices.
+    const first = 0;
+    const count = 4;
+    gl.drawArrays(mode, first, count);
+
+    /*
+    //Define a cor padrão da tela nos argumentos (R, G, B, Opacidade)
+    gl.clearColor(1, 0, 0, 1 );
+    //Instrui o contexto de renderização para redefinir o valor definido na função clearColor
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    */
+</script>
+
+</html>
