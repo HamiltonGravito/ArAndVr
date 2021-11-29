@@ -21,6 +21,13 @@ function main () {
  -0.2, -0.2, 0.3,
  -0.2, 0.4, 0.3,
  0.4, 0.4, 0.3,
+
+ -0.3, 0.3, -0.3,
+ 0.3, 0.3, -0.3,
+ -0.2, 0.4, 0.3,
+ 0.4, 0.4, 0.3,
+ 0.3, 0.3, -0.3,
+ -0.2, 0.4, 0.3,
 ];
 //Obs.: Usa-se valores entre -1 e 1 para definir as localizações dos vértices (matriz de exibição), nessa matrix temos (X,Y,Z) para formar um ponto.
 //Buffer Formas
@@ -42,6 +49,13 @@ function main () {
         1.0,  0.0,  0.0,  1.0,
         1.0,  0.0,  0.0,  1.0,
         1.0,  0.0,  0.0,  1.0,
+        
+        0.0,  1.0,  0.0,  1.0,
+        0.0,  1.0,  0.0,  1.0,
+        0.0,  1.0,  0.0,  1.0,
+        0.0,  1.0,  0.0,  1.0,
+        0.0,  1.0,  0.0,  1.0,
+        0.0,  1.0,  0.0,  1.0,
     ];
 
 //Buffer Cores
@@ -127,7 +141,7 @@ function main () {
 // ====== Desenhe os pontos na tela ======
     const mode = gl.TRIANGLES;
     const first = 0;
-    const count = 12;
+    const count = 18;
     gl.drawArrays(mode, first, count);
 
 }
